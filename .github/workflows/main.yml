@@ -21,8 +21,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install dependencies (Fixed)
+        run: pip install pytest flake8
 
       - name: Startup HTTP Server for pipeline tests
         # This step is often a placeholder or runs a specific startup command
@@ -33,25 +33,24 @@ jobs:
         
       - name: Lint with flake8
         run: |
-          pip install flake8
+          # flake8 is already installed from the step above
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --max-complexity=10 --max-line-length=120 --statistics
   
-  # Job 2: Analyze - Runs code quality checks (often combined with build, but kept separate here)
+  # Job 2: Analyze - Runs code quality checks
   analyze:
-    needs: build # This ensures 'analyze' only runs if 'build' succeeds
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Run security analysis (Example placeholder)
         run: echo "Running security scan..."
         
       - name: Run additional code quality analysis
-        # Example of running a specific analysis tool
         run: echo "Running detailed static analysis..."
         
   # Job 3: Deploy - Deploys the built code to GitHub Pages
   deploy:
-    needs: [build, analyze] # This ensures 'deploy' only runs if both 'build' and 'analyze' succeed
+    needs: [build, analyze]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
