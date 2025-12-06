@@ -21,12 +21,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies (Fixed)
-        run: pip install pytest flake8
+      - name: Install dependencies (Corrected)
+        # FIX: Added 'requests' to resolve ModuleNotFoundError
+        run: pip install pytest flake8 requests
 
       - name: Startup HTTP Server for pipeline tests
-        # This step is often a placeholder or runs a specific startup command
-        run: echo "Starting server simulation..." # Replace with actual server command if needed
+        run: echo "Starting server simulation..." 
 
       - name: Run tests
         run: python -m pytest
