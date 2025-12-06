@@ -22,8 +22,8 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies (Corrected)
-        # FIX: Added 'requests' to resolve ModuleNotFoundError
-        run: pip install pytest flake8 requests
+        # FIX: Added 'pytest-mock' to resolve the 'mocker' fixture not found error.
+        run: pip install pytest flake8 requests pytest-mock
 
       - name: Startup HTTP Server for pipeline tests
         run: echo "Starting server simulation..." 
@@ -33,7 +33,7 @@ jobs:
         
       - name: Lint with flake8
         run: |
-          # flake8 is already installed from the step above
+          # Dependencies are already installed from the step above
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --max-complexity=10 --max-line-length=120 --statistics
   
